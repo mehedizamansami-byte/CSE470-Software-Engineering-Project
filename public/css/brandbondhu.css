@@ -1,0 +1,28 @@
+:root{--brand:#4f46e5;--brand-dark:#3730a3;--bg:#f4f5fb;--card:#fff;--text:#1f2433;--muted:#667085;--line:#e4e7ef;--err:#b42318}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+a{color:var(--brand);text-decoration:none}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;background:var(--card);border-bottom:1px solid var(--line)}
+.nav .logo{font-weight:700;font-size:18px;color:var(--brand)}
+.nav form{display:inline}
+.container{max-width:880px;margin:32px auto;padding:0 20px}
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px;width:100%;max-width:420px}
+.card.wide{max-width:none}
+h1{margin:0 0 4px;font-size:22px}
+.sub{color:var(--muted);margin:0 0 20px;font-size:14px}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:#fff}
+input:focus,select:focus{outline:2px solid var(--brand);border-color:transparent}
+.btn{display:inline-block;width:100%;margin-top:20px;padding:11px;border:0;border-radius:8px;background:var(--brand);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--brand-dark)}
+.btn.small{width:auto;margin:0;padding:7px 14px;font-size:13px;background:var(--muted)}
+.error{color:var(--err);font-size:13px;margin-top:6px}
+.alert{background:#fef3f2;border:1px solid #fecdca;color:var(--err);padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:8px}
+.foot{text-align:center;font-size:14px;margin-top:18px;color:var(--muted)}
+.check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px}
+.check input{width:auto}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:#eef0ff;color:var(--brand-dark);font-size:12px;font-weight:600;text-transform:capitalize}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase}
