@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 /**
- * CONTROLLER layer: handles the login form and logout.
+ * CONTROLLER layer: login and logout (Feature 1).
  */
 class LoginController extends Controller
 {
@@ -25,18 +27,31 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        // Only active accounts may sign in.
-        $credentials['is_active'] = true;
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('dashboard'));
+        if ($user && ! $user->is_active && Hash::check($credentials['password'], $user->password)) {
+            return back()
+                ->withErrors(['email' => 'This account has been suspended by an administrator.'])
+                ->onlyInput('email');
         }
 
-        return back()
-            ->withErrors(['email' => 'These credentials do not match our records, or the account is deactivated.'])
-            ->onlyInput('email');
+        // Only active accounts may sign in.
+        if (! Auth::attempt([...$credentials, 'is_active' => true], $request->boolean('remember'))) {
+            return back()
+                ->withErrors(['email' => 'These credentials do not match our records.'])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+
+        // Logging in again reactivates a deactivated account.
+        $user = $request->user();
+        $wasDeactivated = $user->deactivated_at !== null;
+        $user->forceFill(['last_login_at' => now(), 'deactivated_at' => null])->save();
+
+        $redirect = redirect()->intended(route('dashboard'));
+
+        return $wasDeactivated ? $redirect->with('success', 'Welcome back! Your account has been reactivated.') : $redirect;
     }
 
     public function logout(Request $request): RedirectResponse

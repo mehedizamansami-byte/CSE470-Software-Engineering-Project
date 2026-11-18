@@ -47,6 +47,17 @@ return [
             'report' => false,
         ],
 
+        // Shop logos, avatars, portfolio and post images. Saved straight into public/uploads,
+        // so no "php artisan storage:link" step is needed on Windows.
+        'uploads' => [
+            'driver' => 'local',
+            'root' => public_path('uploads'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/uploads',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

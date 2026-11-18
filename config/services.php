@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // BrandBondhu AI service (FastAPI wrapper around the AI model).
+    // local = built-in offline generator, http = call AI_SERVICE_URL and fall back to local.
+    'ai' => [
+        'driver' => env('AI_DRIVER', 'local'),
+        'url' => env('AI_SERVICE_URL'),
+        'timeout' => env('AI_SERVICE_TIMEOUT', 20),
+    ],
+
 ];
